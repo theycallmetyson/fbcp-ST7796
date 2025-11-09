@@ -3,7 +3,7 @@ SPI display driver for Raspberry Pi, Especially for ST7796S This is a modified v
 ```bash
 sudo apt-get install cmake
 cd ~
-git clone https://github.com/jobitjoseph/fbcp-ST7796.git
+git clone https://github.com/theycallmetyson/fbcp-ST7796.git
 cd fbcp-ST7796
 mkdir build
 cd build
@@ -17,9 +17,9 @@ sudo nano /etc/rc.local
 ```
 add the following line to the file, replace pi with your username.
 ```bash
-sudo /home/pi/fbcp-ST7796/build/fbcp-ili9341 &
+sudo /home/${USER}/fbcp-ST7796/build/fbcp-ili9341 &
 ```
-add the following to /boot/config.txt. Change dtoverlay=vc4-kms-v3d to dtoverlay=vc4-fkms-v3d if not working.
+add the following to /boot/firmware/config.txt. Change dtoverlay=vc4-kms-v3d to dtoverlay=vc4-fkms-v3d if not working.
 ```bash
 hdmi_cvt=480 320 60 1 0 0 0
 max_framebuffers=2

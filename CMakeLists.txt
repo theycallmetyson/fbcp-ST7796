@@ -46,7 +46,7 @@ if (SINGLE_CORE_BOARD)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DSINGLE_CORE_BOARD=1")
 endif()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -marm -mabi=aapcs-linux -mhard-float -mfloat-abi=hard -mlittle-endian -mtls-dialect=gnu2 -funsafe-math-optimizations")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ")
 option(ARMV6Z "Target a Raspberry Pi with ARMv6Z instruction set (Pi 1A, 1A+, 1B, 1B+, Zero, Zero W)" ${DEFAULT_TO_ARMV6Z})
 if (ARMV6Z)
   message(STATUS "Enabling optimization flags that target ARMv6Z instruction set (Pi Model A, Pi Model B, Compute Module 1, Pi Zero/Zero W)")

@@ -676,6 +676,7 @@ void SPIDMATransfer(SPITask *task)
   uint32_t *headerAddr = task->DmaSpiHeaderAddress();
   uint32_t valueToWrite = BCM2835_SPI0_CS_TA | DISPLAY_SPI_DRIVE_SETTINGS | (task->PayloadSize() << 16);
   memcpy(headerAddr, &valueToWrite, sizeof(uint32_t)); // Use memcpy to safely write to potentially unaligned address
+  __sync_synchronize();
 
   // TODO: Ideally we would be able to directly perform the DMA from the SPI ring buffer from 'task' pointer. However
   // that pointer is shared to userland, and it is proving troublesome to make it both userland-writable as well as cache-bypassing DMA coherent.

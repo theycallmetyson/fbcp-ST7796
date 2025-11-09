@@ -129,7 +129,7 @@ typedef struct __attribute__((packed)) SPITask
   inline uint8_t *PayloadStart() { return data; }
   inline uint8_t *PayloadEnd() { return data + size; }
   inline uint32_t PayloadSize() const { return size; }
-  inline uint32_t *DmaSpiHeaderAddress() { return &dmaSpiHeader; }
+  inline uint32_t *DmaSpiHeaderAddress() { return (uint32_t*)(data - 4); }
 #endif
 
 } SPITask;

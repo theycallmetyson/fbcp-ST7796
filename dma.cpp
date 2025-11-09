@@ -674,7 +674,8 @@ void SPIDMATransfer(SPITask *task)
   // Transition the SPI peripheral to enable the use of DMA
   spi->cs = BCM2835_SPI0_CS_DMAEN | BCM2835_SPI0_CS_CLEAR | DISPLAY_SPI_DRIVE_SETTINGS;
   uint32_t *headerAddr = task->DmaSpiHeaderAddress();
-  *headerAddr = BCM2835_SPI0_CS_TA | DISPLAY_SPI_DRIVE_SETTINGS | (task->PayloadSize() << 16); // The first four bytes written to the SPI data register control the DLEN and CS,CPOL,CPHA settings.
+  uint32_t valueToWrite = BCM2835_SPI0_CS_TA | DISPLAY_SPI_DRIVE_SETTINGS | (task->PayloadSize() << 16);
+  memcpy(headerAddr, &valueToWrite, sizeof(uint32_t)); // Use memcpy to safely write to potentially unaligned address
 
   // TODO: Ideally we would be able to directly perform the DMA from the SPI ring buffer from 'task' pointer. However
   // that pointer is shared to userland, and it is proving troublesome to make it both userland-writable as well as cache-bypassing DMA coherent.

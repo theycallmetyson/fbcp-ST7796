@@ -682,7 +682,10 @@ void SPIDMATransfer(SPITask *task)
   // that pointer is shared to userland, and it is proving troublesome to make it both userland-writable as well as cache-bypassing DMA coherent.
   // Therefore these two memory areas are separate for now, and we memcpy() from SPI ring buffer to an intermediate 'dmaSourceMemory' memory area to perform
   // the DMA transfer. Is there a way to avoid this intermediate buffer? That would improve performance a bit.
-  memcpy(dmaSourceBuffer.virtualAddr, headerAddr, task->PayloadSize() + 4);
+  uint32_t dmaHeaderValue;
+  memcpy(&dmaHeaderValue, headerAddr, sizeof(uint32_t));
+  memcpy(dmaSourceBuffer.virtualAddr, &dmaHeaderValue, sizeof(uint32_t));
+  memcpy(dmaSourceBuffer.virtualAddr + sizeof(uint32_t), task->data, task->PayloadSize());
 
   volatile DMAControlBlock *cb = (volatile DMAControlBlock *)dmaCb.virtualAddr;
   volatile DMAControlBlock *txcb = &cb[0];
